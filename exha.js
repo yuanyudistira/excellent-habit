@@ -14,14 +14,16 @@ var exha = new function() {
     //Set initial settings
     this.init = function () {
         this.displayCurrentDate("section#currentDateTime")
-    
+
+
     };
     
     
     //Utilities Function
     this.displayCurrentDate = function(id) {
         var currentDate = new Date();
-        $(id).replaceWith('Current Date: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+        $(id).html('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+
     }
 }
 
