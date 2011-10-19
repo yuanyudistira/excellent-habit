@@ -13,16 +13,25 @@ var exha = new function() {
     
     //Set initial settings
     this.init = function () {
-        this.displayCurrentDate("section#currentDateTime")
-
+        
+        $(document).ready(function() {
+            //alert('Welcome to StarTrackr! Now no longer under police ...');
+        });
+        this.displayCurrentDate("section#currentDateTime");
+        
+        //attach event to menu
+       
+        $('ul#mainMenu li a').bind('click', function() {
+            //exha.displayCurrentDate();
+        });
 
     };
     
     
     //Utilities Function
-    this.displayCurrentDate = function(id) {
+    this.displayCurrentDate = function() {
         var currentDate = new Date();
-        $(id).html('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+        $("section#currentDateTime").html('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
 
     }
 }
