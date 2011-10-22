@@ -1,66 +1,41 @@
-<!DOCTYPE html>
-<html>
 
-	<head>
-            <meta charset="utf-8"/>
-            <title>Excellent Habit</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="stylesheet" media="all" href="jquery.mobile-1.0rc1.min.css"/>
-            <link rel="stylesheet" media="all" href="exha.css"/>
-            <script type="text/javascript" src="phonegap-1.0.0.js"></script>
-            <script type="text/javascript" src="jquery-1.6.4.js"></script>
-            <script type="text/javascript" src="jquery.mobile-1.0rc1.min.js"></script>
-	    <script type="text/javascript" src="modernizr-latest.js"></script>
-            <script type="text/javascript" src="exha.js"></script>
-	</head>
-	
-	<body onload="onBodyLoad()" >
 
             <div data-role="page" id="dreamcapture" data-title="Excellent Habit Home">
                 
-                <div data-role="header" id="mastheadDC" data-position="inline">
+                <div data-role="header" id="headerDC" data-position="inline">
                         <h1>Ex-Ha App</h1>
                              <div data-role="navbar">
                         <section id="currentDateTime" class="ui-btn-right">Tanggal</section>
                         <ul>
-                                <li><a href="index.html" >Today List</a></li>
-                                <li><a href="dreamcapture.html" class="ui-btn-active">Dream Capture</a></li>
-                                <li><a href="wizard.html">Run Wizard</a></li>
-                                <li><a href="settings.html">Settings</a></li>
+				<li><a href="index.html" id="todayListMainMenu"  rel="external">Today List</a></li>
+				<li><a href="dreamcapture.html" class="ui-btn-active"  id="dreamCaptureMainMenu" >Dream Capture</a></li>
+				<li><a href="wizard.html" id="runWizardMainMenu" >Run Wizard</a></li>
+				<li><a href="settings.html" id="settingsMainMenu" >Settings</a></li>
                         </ul>
                         </div>
                         
                 </div>
         
 
-                <div data-role="content" id="listTask">
+                <div data-role="content" id="contentDC">
                 
                     <div data-role="fieldcontain">
-                    <label for="textarea">Capture Anything That Come To You:</label>
-                    <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
-                    <a href="#" data-role="button" data-inline="true">Cancel</a>
-                    <a href="#" data-role="button" data-inline="true" data-theme="b">Save</a>
+                    <label for="textarea" >Capture Anything That Come To You:</label>
+                    <textarea cols="40" rows="8" name="textarea" id="inputDreamCapture"></textarea>
+                    <a href="#" data-role="button" data-inline="true" id="cancelDreamCaptureBtn">Cancel</a>
+                    <a href="#" data-role="button" data-inline="true" data-theme="b" id="saveDreamCaptureBtn">Save</a>
                 </div>
-             
-		<ol data-role="listview">
-			<li>
-				Mengganti status di facebook biar exist 
-			</li>
-			<li>
-				Diminta bos menemani makan siang gratis....
-			</li>
-		</ol>
+		
+		<ul data-role="listview" id="dreamCaptureTaskList">
+
+		</ul>
                     
                 </div>
                 <hr/>		
-                <div data-role="footer" id="footer">	
+                <div data-role="footer" id="footerDC">	
                         <section id="developer">
                                 <p>Excellent Habit App 1.0 <a href="help.html">Help</a></p>
                         </section>
                 </div>
                 
             </div>
-		
-	</body>
-	
-</html>

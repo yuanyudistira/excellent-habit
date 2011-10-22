@@ -1,85 +1,30 @@
-<!DOCTYPE html>
-<html>
 
-	<head>
-            <meta charset="utf-8"/>
-            <title>Excellent Habit</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="stylesheet" media="all" href="jquery.mobile-1.0rc1.min.css"/>
-            <link rel="stylesheet" media="all" href="exha.css"/>
-            <script type="text/javascript" src="phonegap-1.0.0.js"></script>
-            <script type="text/javascript" src="jquery-1.6.4.js"></script>
-            <script type="text/javascript" src="jquery.mobile-1.0rc1.min.js"></script>
- 	    <script type="text/javascript" src="modernizr-latest.js"></script>
-           <script type="text/javascript" src="exha.js"></script>
-
-	</head>
-	
-	<body onload="onBodyLoad()" >
 
             <div data-role="page" id="wizard2" data-title="Excellent Habit Home">
                 
-                <div data-role="header" id="mastheadWizard2" data-position="inline">
+                <div data-role="header" id="headerWizard2" data-position="inline">
                         <h1>Ex-Ha App</h1>
                              <div data-role="navbar">
                         <section id="currentDateTime" class="ui-btn-right">Tanggal</section>
                         <ul>
-                                <li><a href="index.html" >Today List</a></li>
-                                <li><a href="dreamcapture.html">Dream Capture</a></li>
-                                <li><a href="wizard.html" class="ui-btn-active">Run Wizard</a></li>
-                                <li><a href="settings.html">Settings</a></li>
-                        </ul>
+ 				<li><a href="index.html" id="todayListMainMenu" rel="external">Today List</a></li>
+				<li><a href="dreamcapture.html" id="dreamCaptureMainMenu">Dream Capture</a></li>
+				<li><a href="wizard.html" class="ui-btn-active" id="runWizardMainMenu">Run Wizard</a></li>
+				<li><a href="settings.html" id="settingsMainMenu">Settings</a></li>                        </ul>
                         </div>
                         
                 </div>
         
 
-                <div data-role="content" id="listTask">
+                <div data-role="content" id="contentWizard2">
                   
                     <div data-role="fieldcontain">
-                    <p>Wizard step 2: (Calm Down, And think!, Which one will you do it today? Schedule? or Ask some one to do it</p>
+                    <p>Wizard step 2: (All this item is coming from dream capture and wizard step 1. Do / schedule / delegate or delete all item before you hit the finish button)</p>
                     
                 </div>
-             <p><a href="wizard.html" data-role="button" data-inline="true">Previous</a><a href="wizard3.html" data-role="button" data-theme="b" data-inline="true">NEXT</a></p>
-		<ul data-role="listview">
-  			<li>
-                                <p>Ini baru keterangan dari tugas yang harus dikerjakan</p>
-                                
-			</li>
-           <p> <div data-role="controlgroup" data-type="horizontal" >
-                                    <a href="#" data-role="button" data-icon="check" data-iconpos="notext" data-theme="c" data-inline="true">DO IT</a>
-                                    <a href="#" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">SCHEDULE IT</a>
-                                    <a href="#" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">DELEGATE IT</a>                                  
-                                    <a href="#" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="c" data-inline="true">DELETE</a>
-                                </div></p>
-			<li>
-                                <p>Ini baru keterangan dari tugas yang harus dikerjakan</p>
-                                <div data-role="controlgroup" data-type="horizontal" >
-                                    <a href="#" data-role="button" data-icon="check" data-iconpos="notext" data-theme="c" data-inline="true">DO IT</a>
-                                    <a href="#" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">SCHEDULE IT</a>
-                                    <a href="#" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">DELEGATE IT</a>                                  
-                                    <a href="#" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="c" data-inline="true">DELETE</a>
-                                </div>
-			</li>
-			<li>
-                                <p>Ini baru keterangan dari tugas yang harus dikerjakan</p>
-                                <div data-role="controlgroup" data-type="horizontal" >
-                                    <a href="#" data-role="button" data-icon="check" data-iconpos="notext" data-theme="c" data-inline="true">DO IT</a>
-                                    <a href="#" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">SCHEDULE IT</a>
-                                    <a href="#" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">DELEGATE IT</a>                                  
-                                    <a href="#" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="c" data-inline="true">DELETE</a>
-                                </div>
-                        </li>
-			<li>
+             <p><a href="wizard.html" data-role="button" data-inline="true">Previous</a><a href="wizard3.html" data-role="button" data-theme="b" data-inline="true">FINISH</a></p>
+		<ul data-role="listview" id="wizard2TaskList">
 
-                                <p>Ini baru keterangan dari tugas yang harus dikerjakan</p>
-                                <div data-role="controlgroup" data-type="horizontal" >
-                                    <a href="#" data-role="button" data-icon="check" data-iconpos="notext" data-theme="c" data-inline="true">DO IT</a>
-                                    <a href="#" data-role="button" data-icon="grid" data-iconpos="notext" data-theme="c" data-inline="true">SCHEDULE IT</a>
-                                    <a href="#" data-role="button" data-icon="forward" data-iconpos="notext" data-theme="c" data-inline="true">DELEGATE IT</a>                                  
-                                    <a href="#" data-role="button" data-icon="delete" data-iconpos="notext" data-theme="c" data-inline="true">DELETE</a>
-                                </div>
-			</li>
 		</ul>
 
                 </div>
@@ -91,7 +36,4 @@
                 </div>
                 
             </div>
-		
-	</body>
-	
-</html>
+    

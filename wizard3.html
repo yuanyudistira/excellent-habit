@@ -1,44 +1,25 @@
-<!DOCTYPE html>
-<html>
 
-	<head>
-            <meta charset="utf-8"/>
-            <title>Excellent Habit</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="stylesheet" media="all" href="jquery.mobile-1.0rc1.min.css"/>
-            <link rel="stylesheet" media="all" href="exha.css"/>
-            <script type="text/javascript" src="phonegap-1.0.0.js"></script>
-            <script type="text/javascript" src="jquery-1.6.4.js"></script>
-            <script type="text/javascript" src="jquery.mobile-1.0rc1.min.js"></script>
-	    <script type="text/javascript" src="modernizr-latest.js"></script>
-            <script type="text/javascript" src="exha.js"></script>
-
-	</head>
-	
-	<body onload="onBodyLoad()" >
-
-            <div data-role="page" id="wizard2" data-title="Excellent Habit Home">
+            <div data-role="page" id="wizard3" data-title="Excellent Habit Home">
                 
-                <div data-role="header" id="mastheadWizard2" data-position="inline">
+                <div data-role="header" id="headerWizard2" data-position="inline">
                         <h1>Ex-Ha App</h1>
                              <div data-role="navbar">
                         <section id="currentDateTime" class="ui-btn-right">Tanggal</section>
                         <ul>
-                                <li><a href="index.html" >Today List</a></li>
-                                <li><a href="dreamcapture.html">Dream Capture</a></li>
-                                <li><a href="wizard.html" class="ui-btn-active">Run Wizard</a></li>
-                                <li><a href="settings.html">Settings</a></li>
-                        </ul>
+  				<li><a href="index.html" id="todayListMainMenu" rel="external">Today List</a></li>
+				<li><a href="dreamcapture.html" id="dreamCaptureMainMenu">Dream Capture</a></li>
+				<li><a href="wizard.html" class="ui-btn-active" id="runWizardMainMenu">Run Wizard</a></li>
+				<li><a href="settings.html" id="settingsMainMenu">Settings</a></li>                      </ul>
                         </div>
                         
                 </div>
         
 
-                <div data-role="content" id="listTask">
+                <div data-role="content" id="contentWizard3">
                   
                     <div data-role="fieldcontain">
-                    <p>Thank You! Now focus your enegry to hit your target TODAY!</p>
-                    
+                    <p>Thank You! Now focus your enegry to hit your target!!</p>
+		    
                 </div>
     
                 </div>
@@ -50,7 +31,4 @@
                 </div>
                 
             </div>
-		
-	</body>
-	
-</html>
+    

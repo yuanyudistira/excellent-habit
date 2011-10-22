@@ -1,3 +1,9 @@
 /*
 Style Khusus Untuk Program Excellent Habit
 */
+
+
+    .tulisanCoret {
+        text-decoration: line-through;
+        font-style:italic;
+        }

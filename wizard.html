@@ -1,55 +1,35 @@
-<!DOCTYPE html>
-<html>
-
-	<head>
-            <meta charset="utf-8"/>
-            <title>Excellent Habit</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <link rel="stylesheet" media="all" href="jquery.mobile-1.0rc1.min.css"/>
-            <link rel="stylesheet" media="all" href="exha.css"/>
-            <script type="text/javascript" src="phonegap-1.0.0.js"></script>
-            <script type="text/javascript" src="jquery-1.6.4.js"></script>
-            <script type="text/javascript" src="jquery.mobile-1.0rc1.min.js"></script>
-	    <script type="text/javascript" src="modernizr-latest.js"></script>
-            <script type="text/javascript" src="exha.js"></script>
-	</head>
-	
-	<body onload="onBodyLoad()" >
 
             <div data-role="page" id="wizard" data-title="Excellent Habit Home">
                 
-                <div data-role="header" id="mastheadWizard" data-position="inline">
+                <div data-role="header" id="headerWizard" data-position="inline">
                         <h1>Ex-Ha App</h1>
                              <div data-role="navbar">
                         <section id="currentDateTime" class="ui-btn-right">Tanggal</section>
                         <ul>
-                                <li><a href="index.html" >Today List</a></li>
-                                <li><a href="dreamcapture.html">Dream Capture</a></li>
-                                <li><a href="wizard.html" class="ui-btn-active">Run Wizard</a></li>
-                                <li><a href="settings.html">Settings</a></li>
-                        </ul>
+				<li><a href="index.html" id="todayListMainMenu" rel="external">Today List</a></li>
+				<li><a href="dreamcapture.html" id="dreamCaptureMainMenu" >Dream Capture</a></li>
+				<li><a href="wizard.html" class="ui-btn-active" id="runWizardMainMenu" >Run Wizard</a></li>
+				<li><a href="settings.html" id="settingsMainMenu" >Settings</a></li>                        </ul>
                         </div>
                         
                 </div>
         
 
-                <div data-role="content" id="listTask">
+                <div data-role="content" id="contentWizard">
                   
                     <div data-role="fieldcontain">
-                    <label for="textarea">Dump Your Brain: </label>
-                    <textarea cols="40" rows="8" name="textarea" id="textarea"></textarea>
-                    <a href="#" data-role="button" data-inline="true">Cancel</a>
-                    <a href="#" data-role="button" data-inline="true" data-theme="b">Add</a>
+                    <label for="textarea">First, Please Dump Your Brain: </label>
+                    <textarea cols="40" rows="8" name="textarea" id="inputWizard1" ></textarea>
+                    <a href="#" data-role="button" data-inline="true" id="cancelWizard1Btn">Cancel</a>
+                    <a href="#" data-role="button" data-inline="true" data-theme="b" id="saveWizard1Btn">Save</a>
                 </div>
-             <p><a href="wizard2.html" data-role="button" data-theme="b">Step 2</a></p>
-		<ol data-role="listview">
-			<li>
-				Mengganti status di facebook biar exist 
-			</li>
-			<li>
-				Diminta bos menemani makan siang gratis....
-			</li>
-		</ol>
+             <div><a href="wizard2.html" data-role="button" data-theme="d">Go To Next Step</a>
+	     <hr /></div>
+	     
+		<ul data-role="listview" id="wizard1TaskList">
+
+		</ul>
+	     
                     
                 </div>
                 <hr/>		
@@ -60,7 +40,3 @@
                 </div>
                 
             </div>
-		
-	</body>
-	
-</html>
