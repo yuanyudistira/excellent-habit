@@ -111,7 +111,7 @@ this.init = function () {
       });
     
 
-};
+}
 
 //onDeviceReady Function
 this.onDeviceReady = function ()
@@ -232,7 +232,7 @@ this.displayTodayTask = function()
         
         $("input[type='checkbox']").change(function() {
             $('input:checkbox:checked').each(function(index) {
-             alert("Another Task DONE : id="+$(this).val()+" >>"+$(this).next("label").text());
+            // alert("Another Task DONE : id="+$(this).val()+" >>"+$(this).next("label").text());
              
              //change taskstatusid of taskid=$this.val() to = 6
              var deletedID= $(this).val();
@@ -371,7 +371,7 @@ this.displayWizard2Task = function()
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
                     $('#wizard2TaskList').append('<li id=\"itemWizard2'+result.rows.item(i).taskid+'\"><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id='+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div>'+
-                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"mailto:abc@abc.com?subject='+encodeURIComponent(result.rows.item(i).taskname)+'\"  >DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
+                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
                 }
              
         }
@@ -409,17 +409,39 @@ this.scheduleTask = function(idTask)
 
 this.delegateTask = function(idTask)
 {
-    
-    //We will schedule for tomorrow
-    //alert("schedule task di panggil");
+
+    //Get Detail Task For Subject & Text Body
     db.transaction(
     function(tx) {
-        
-        var date = new Date();
-        date.setDate(date.getDate() + 1);     
+        var sQL = "select * from task where taskid="+idTask;
+        //alert(sQL);
+            tx.executeSql(sQL, [], function(tx, result){
+                
+           var txtSubject = result.rows.item(0).taskname;
+           var txtBody = result.rows.item(0).taskname;
+            
+            /*
+            Di sini kita perlu menginstall sebuah plugins phonegap
+            yang bernama email composer yang saat ini hanya berjalan di iPhone.
+           isa di download di sini : https://github.com/phonegap/phonegap-plugins/tree/master/iPhone/EmailComposer
+            */
+            
+            //Open Email Composer Plugins
+           //window.plugins.emailComposer.showEmailComposer(txtSubject,txtBody, "recipient,recipient", "ccRecipient", "bccRecipient",false);
+          
+           }, function(){
+                //someting is wrong
+            });
+
+        }
+    );   
     
-        
-        var sQL = "update  task set taskstatusid=3 , taskduedate='"+date.toString()+"' where taskid="+idTask;
+
+    
+    //update DB and remove from list 
+    db.transaction(
+    function(tx) {
+        var sQL = "update  task set taskstatusid=5 where taskid="+idTask;
         //alert(sQL);
             tx.executeSql(sQL, [], function(){
                 //.remove
@@ -430,12 +452,10 @@ this.delegateTask = function(idTask)
 
         }
     );   
+
 }
 
-this.cancelDreamCapture = function()
-{
-    
-}
+
 this.addNewTask = function(txtNewTask,idTaskStatus)
 {
     var currentDate = new Date();
@@ -475,6 +495,7 @@ this.setAsTodayTask = function(idTask)
 {
     exha.setTaskType(idTask,3);
 }
+
 this.setTaskType = function(idTask,taskTypeID)
 {
   db.transaction(
@@ -512,10 +533,7 @@ this.deleteTask = function(idTask)
     );
 
 }
-this.savePersonalInfo = function()
-{
-    
-} 
+
 
 //Utilities Function
 this.displayCurrentDate = function() {
