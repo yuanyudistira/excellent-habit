@@ -18,24 +18,20 @@ this.init = function () {
     document.addEventListener("deviceready",exha.onDeviceReady,false);    
     //initiate new javascript object
     this.createDatabase();   
-    exha.displayTodayTask();
-    $( "#todayListMainMenu" ).live( "click", function( event, data ){
-         //class utk button utama tidak hilang
-         $( "#todayListMainMenu" ).addClass('ui-btn-active');
-         
-      });
-
+    //exha.displayTodayTask();
+   
     
     
     //Attach event ke after page show
-    $('#halamandepan').live('pageshow', function () {
+    $('#halamandepan').bind('pageshow', function () {
         //Populate Today Task
-        exha.displayTodayTask();
+       exha.displayTodayTask();
+        //$('#reloadPageBtn').click(this.reloadPage);
     });
-    $('#dreamcapture').live('pageshow', function () {
+    $('#dreamcapture').bind('pageshow', function () {
         //Populate Current Item in Dream Capture
          exha.displayDreamCaptureTask();
-
+ 
         //Attach Fungsi Ke Button
         $('#cancelDreamCaptureBtn').bind( "click", function( event, data ){
             $('#inputDreamCapture').val('');
@@ -46,6 +42,7 @@ this.init = function () {
             {
                 $('#inputDreamCapture').val('empty');
                 $('#inputDreamCapture').focus();
+                //exit;
             }else{
                 exha.addNewTask(newDreamCapture, 1);
                 $('#inputDreamCapture').val('');
@@ -54,10 +51,11 @@ this.init = function () {
         });
         
     });
-    $('#wizard').live('pageshow', function () {
+    $('#wizard').bind('pageshow', function () {
         //Populate current item in wizard 
+        
         exha.displayWizard1Task();
-
+        
         $('#cancelWizard1Btn').bind( "click", function( event, data ){
             $('#inputWizard1').val('');
         });
@@ -79,7 +77,13 @@ this.init = function () {
     $('#wizard2').live('pageshow', function () {
         //Populate current item in wizard 
         exha.displayWizard2Task();
-
+    
+    
+    });
+     $('#wizard3').live('pageshow', function () {
+        //Populate current item in wizard 
+        exha.displayTodayTask();
+    
     
     });
     
@@ -99,17 +103,13 @@ this.init = function () {
 
     $( document ).bind( "pageload", function( event, data ){
          //ini agar setiap kali page load, tetap dijalankan fungsi exha.init
-         exha.displayCurrentDate("section#currentDateTime");
-         exha.displayTodayTask();
-         
-        
-        
-
-    
-
+         //exha.displayCurrentDate("section#currentDateTime");
+       //  exha.displayTodayTask();
+       // exha.displayWizard1Task();
+       //exha.displayWizard1Task();
         
       });
-    
+   
 
 }
 
@@ -123,7 +123,7 @@ this.onDeviceReady = function ()
 this.createDatabase = function()
 {
         if (Modernizr.websqldatabase){
-            db = openDatabase('exhaDBOK03', "1.0", 'exhadb',200000);
+            db = openDatabase('exhaDB2011', "1.0", 'exhadb',200000);
             
             //alert(" database exhadb telah dibuat ");
             
@@ -186,7 +186,7 @@ this.createTable = function()
    
                   },
                 function(){
-                    alert('tidak bisa membuat table task!');
+                    this.customAlert('tidak bisa membuat table task!');
                 }
                 );
         }
@@ -199,7 +199,11 @@ this.createTable = function()
 this.displayTodayTask = function()
 {
     var htmlTodayTask = db.transaction(function(tx) {
-        tx.executeSql('SELECT *  FROM task where taskstatusid=3 ',[], function (tx, result) {
+        
+        var currentDate = new Date();
+        //currentDate2 = date1.getTime()
+        //alert(currentDate);
+        tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid DESC',[], function (tx, result) {
     
         jmlItem = result.rows.length;
         htmlTodayTask="";
@@ -208,57 +212,110 @@ this.displayTodayTask = function()
         }else{
             //<input type="checkbox" name="checkbox-1" id="checkbox-1" class="custom" />
               var len = result.rows.length, i;
-                var newhtml = "<fieldset data-role=\"controlgroup\">";
+               //newhtml = "<fieldset data-role=\"controlgroup\">";
+                //newhtml ="<li>";
                 var currentDate = new Date();
+                    tglHariIni = currentDate.getDate();
+                    blnHariIni = currentDate.getMonth();
+                    thnHariIni = currentDate.getFullYear();
+                     simpleDateToday = blnHariIni+"/"+tglHariIni+"/"+thnHariIni;
+                     newSimpleTodayDateObject =  new Date(simpleDateToday);
+                     
+                     var htmlNewContent = '';
                 for (i = 0; i < len; i++) {
+                    
+                    //date1 = new Date('01/02/2010') >> 2 januari 2010
+
+                    
+                    
                    var ItemDueDate  = new Date(result.rows.item(i).taskduedate);
+                    tglTask = ItemDueDate.getDate();
+                    blnTask = ItemDueDate.getMonth();
+                    thnTask = ItemDueDate.getFullYear();
+                    simpleDateTask = blnTask+"/"+tglTask+"/"+thnTask;
+                    newSimpleTaskDateObject =  new Date(simpleDateTask);
                     
-                    //alert(ItemDueDate+" >> "+currentDate);
                     
-                    if(ItemDueDate > currentDate) {
-                        //dont show today
-                    }else{
-                        newhtml += "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
-                        newhtml += "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\">"+result.rows.item(i).taskname+"</label>";                        
-                    }
+                    //alert("item: "+simpleDateTask+" >> Current "+simpleDateToday);
+                    
+                     //Only Show Today + Done Or not Done   
+                        if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                            if(result.rows.item(i).taskstatusid==3){
+                                
+                                newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\">"+result.rows.item(i).taskname+"</label>";
+                               // newhtml +="A";
+                                
+                                
+                
+                            }else{
+                                
+                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
+                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
+                               //newhtml +="B";
+                            }
+                                                 
+                           htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
+                        }else {
+                           
+                        }
+                        
+
+                        
+                   
+                
+    
+                    
                 }
-             newhtml +="</fieldset>";
+                //alert(htmlNewContent);
+                $('#todayListTaskDyn').html(htmlNewContent).listview('refresh');
+                
+             //newhtml +="</fieldset>";
+             //newhtml +="</li>";
+             
+             // $('#todayListTaskDyn').append(newhtml).listview('refresh');
         }
         
         //alert(newhtml);
-        $('#todayLisTaskContent').html(newhtml).page();
+        //$('#todayTODO').html(newhtml).page();
+          // $('#listTodayTask').html(newhtml).listview('refresh');
+  
 
  
         
         $("input[type='checkbox']").change(function() {
-            $('input:checkbox:checked').each(function(index) {
-            // alert("Another Task DONE : id="+$(this).val()+" >>"+$(this).next("label").text());
-             
-             //change taskstatusid of taskid=$this.val() to = 6
-             var deletedID= $(this).val();
-             var updateSQL = "UPDATE task SET taskstatusid=6 where taskid="+deletedID;
-                //alert(updateSQL);
-            db.transaction(
-            function(tx) {
-            tx.executeSql("UPDATE task SET taskstatusid=6 WHERE taskid="+deletedID, [], function(){
-                        //alert("Berhasil di update");
-                          },
-                        function(){
-                          //  alert('tidak bisa melakukan update!');
-                        }
-                        );
-                }
-            );
             
+           
+                
+                // alert("Another Task DONE : id="+$(this).val()+" >>"+$(this).next("label").text());
+                 
+                 //change taskstatusid of taskid=$this.val() to = 6
+                 var deletedID= $(this).val();
+                 var updateSQL = "UPDATE task SET taskstatusid=6 where taskid="+deletedID;
+                   // alert(updateSQL);
+               
+                db.transaction(
+                function(tx) {
+                tx.executeSql("UPDATE task SET taskstatusid=6 WHERE taskid="+deletedID, [], function(){
+                            //alert("Berhasil di update");
+                              },
+                            function(){
+                              //  alert('tidak bisa melakukan update!');
+                            }
+                            );
+                    }
+                );
+                
              
-             //disabled checkbox or delete
-             $(this).next("label").addClass("tulisanCoret");
-             $("#checkboxToday-"+$(this).val()).attr('disabled', '');
-
-            }
-        );
+                 //disabled checkbox or delete
+                 $(this).next("label").addClass("tulisanCoret");
+                 $("#checkboxToday-"+$(this).val()).attr('disabled', '');
+                 exha.customAlert("Good, Another task done!");
+                    return false;
+   
+            
       
-    });
+        });
 
     }, this.errorHandler);
     
@@ -282,8 +339,13 @@ this.displayDreamCaptureTask = function()
               var len = result.rows.length, i;
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
-                    $('#dreamCaptureTaskList').append('<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemDreamCapture-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>').listview('refresh');
+                    
+                    newhtml += '<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemDreamCapture-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>';
+                    //$('#dreamCaptureTaskList').append('<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemDreamCapture-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>').listview('refresh');
                 }
+                
+                    $('#dreamCaptureTaskList').html(newhtml).listview('refresh');
+                
              
         }
   }, this.errorHandler);
@@ -345,8 +407,16 @@ this.displayWizard1Task = function()
               var len = result.rows.length, i;
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
-                    $('#wizard1TaskList').append('<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemWizard1-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>').listview('refresh');
+                  
+                  
+                    //$('#wizard1TaskList').append('<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemWizard1-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>').listview('refresh');
+                newhtml +='<li><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id=itemWizard1-'+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div></li>';
+                
+                
                 }
+             
+                    $('#wizard1TaskList').html(newhtml).listview('refresh');
+             
              
         }
   }, this.errorHandler);
@@ -371,7 +441,7 @@ this.displayWizard2Task = function()
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
                     $('#wizard2TaskList').append('<li id=\"itemWizard2'+result.rows.item(i).taskid+'\"><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id='+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div>'+
-                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
+                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.delegateTask('+result.rows.item(i).taskid+')\">DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
                 }
              
         }
@@ -399,6 +469,7 @@ this.scheduleTask = function(idTask)
             tx.executeSql(sQL, [], function(){
                 //.remove
                 $('#itemWizard2'+idTask).remove();
+                exha.customAlert("Task Scheduled!")
            }, function(){
                 //someting is wrong
             });
@@ -446,6 +517,7 @@ this.delegateTask = function(idTask)
             tx.executeSql(sQL, [], function(){
                 //.remove
                 $('#itemWizard2'+idTask).remove();
+                exha.customAlert("Not Implemented Yet!");
            }, function(){
                 //someting is wrong
             });
@@ -525,6 +597,8 @@ this.deleteTask = function(idTask)
                 //.remove
                 $('#itemWizard2'+idTask).remove();
                 //$('#wizard2TaskList').listview('refresh');
+                exha.customAlert("Task Deleted!");
+                
            }, function(){
                 //someting is wrong
             });
@@ -535,12 +609,42 @@ this.deleteTask = function(idTask)
 }
 
 
+
 //Utilities Function
+this. alertDismissed = function() {
+    // do something
+}
+
+this.customAlert = function(txtMessage) {
+    
+     try{
+       if(navigator != null){
+               navigator.notification.alert(
+        txtMessage,  // message
+        exha.alertDismissed,         // callback
+        'Excellent Habit App',            // title
+        'Done'                  // buttonName
+    );  
+       }
+   }catch(e){
+       alert(txtMessage);
+   }
+
+    
+  
+}
+
+
 this.displayCurrentDate = function() {
     var currentDate = new Date();
     $("section#currentDateTime").text('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
 }  
 
+this.reloadPage = function(){
+
+  //window.location.reload("index.html");
+  //exha.displayTodayTask();
+}
 this.errorHandler = function(){
     alert("ada masalah");
 }
