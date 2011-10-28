@@ -469,7 +469,7 @@ this.scheduleTask = function(idTask)
             tx.executeSql(sQL, [], function(){
                 //.remove
                 $('#itemWizard2'+idTask).remove();
-                exha.customAlert("Task Scheduled!")
+                exha.customAlert("Very wise, Let's doit tomorrow!")
            }, function(){
                 //someting is wrong
             });
@@ -517,7 +517,7 @@ this.delegateTask = function(idTask)
             tx.executeSql(sQL, [], function(){
                 //.remove
                 $('#itemWizard2'+idTask).remove();
-                exha.customAlert("Not Implemented Yet!");
+                exha.customAlert("Not Implemented Yet! We will update it soon enough");
            }, function(){
                 //someting is wrong
             });
@@ -566,6 +566,7 @@ this.addNewTask = function(txtNewTask,idTaskStatus)
 this.setAsTodayTask = function(idTask)
 {
     exha.setTaskType(idTask,3);
+     exha.customAlert("Cool, You'll complete that task today!!");
 }
 
 this.setTaskType = function(idTask,taskTypeID)
