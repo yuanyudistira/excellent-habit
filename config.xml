@@ -1,29 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <widget xmlns = "http://www.w3.org/ns/widgets"
 xmlns:gap = "http://phonegap.com/ns/1.0"
-id = "com.whitefox.parken"
-version = "1.0.1">
+id = "com.pusakainformatika.excellenthabit"
+version = "0.9.9">
 
 <name>Excellent Habit</name>
 
 <description>
-Excellent Habit Apps
+Mobile Apps To Help You Build An Excellent Habit
 </description>
 
-<author href="http://www.sabukhitam.com"
-email="support@sabukhitam.com">
-Sabukhitam
+<author href="http://pusakainformatika.com"
+email="yudistira@pusakainformatika.com">
+Yuan Yudistira
 </author>
 
 <gap:platforms>
-<gap:platform name="android" minVersion="2.2" />
-<gap:platform name="ios" />
+<gap:platform name="android" minVersion="2.0" />
+<gap:platform name="webos" />
+<gap:platform name="symbian.wrt" />
+<gap:platform name="blackberry" project="widgets"/>
 </gap:platforms>
 
 <icon src="icon.png" gap:role="default" />
 
 <gap:splash src="phonestartup.png"/>
 
-<!-- sample preference specification -->
-<preference name="autorotate" value="false" readonly="true"/>
-</widget> 
+
+
+  <preference name="permissions" value="none"/>
+</widget>
