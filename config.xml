@@ -24,7 +24,6 @@ Sabukhitam
 
 <gap:splash src="phonestartup.png"/>
 
-<feature name="http://api.phonegap.com/1.0/network" />
 <!-- sample preference specification -->
 <preference name="autorotate" value="false" readonly="true"/>
 </widget> 
