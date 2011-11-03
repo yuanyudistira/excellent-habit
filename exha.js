@@ -136,7 +136,7 @@ this.createDatabase = function()
         
         } else {
         
-            alert("no database support");
+            alert("n");
         }
         
 }
@@ -208,7 +208,7 @@ this.displayTodayTask = function()
         var currentDate = new Date();
         //currentDate2 = date1.getTime()
         //alert(currentDate);
-        tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid DESC',[], function (tx, result) {
+        tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid ASC',[], function (tx, result) {
     
         jmlItem = result.rows.length;
         htmlTodayTask="";
@@ -244,7 +244,7 @@ this.displayTodayTask = function()
                     //alert("item: "+simpleDateTask+" >> Current "+simpleDateToday);
                     
                      //Show Today + Done Or not Done   
-                        if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                        //if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
                             if(result.rows.item(i).taskstatusid==3){
                                 
                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
@@ -261,26 +261,14 @@ this.displayTodayTask = function()
                             }
                                                  
                            htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
-                        }else {
-                            //show un finish from yesterday
-                            if(result.rows.item(i).taskstatusid==3){
-                                
-                                newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\"  class=yesterdayUnfinished>"+result.rows.item(i).taskname+"</label>";
-                               // newhtml +="A";
-                                
-                                
-                
-                            }else{
-                                //done, not show
-                  
-                            }
-                                                 
-                           htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';                           
+                       // }else {
+                           
+                           
+                                        
                             
                             
                            
-                        }
+                       // }
                         
 
                         
