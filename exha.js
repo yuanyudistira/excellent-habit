@@ -208,7 +208,7 @@ this.displayTodayTask = function()
         var currentDate = new Date();
         //currentDate2 = date1.getTime()
         //alert(currentDate);
-        tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid ASC',[], function (tx, result) {
+        tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid DESC',[], function (tx, result) {
     
         jmlItem = result.rows.length;
         htmlTodayTask="";
@@ -247,17 +247,20 @@ this.displayTodayTask = function()
                         //if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
                             if(result.rows.item(i).taskstatusid==3){
                                 
-                                newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
                                 newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\">"+result.rows.item(i).taskname+"</label>";
                                // newhtml +="A";
-                                
+                         
                                 
                 
                             }else{
                                 
-                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
-                               //newhtml +="B";
+                                if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                                    newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
+                                    newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
+                                    //newhtml +="B";
+                                }
+                            
                             }
                                                  
                            htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
