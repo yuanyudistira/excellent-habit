@@ -4,12 +4,12 @@
 	    <meta charset="utf-8"/>
 	    <title>Excellent Habit</title>
 	    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-	    <link rel="stylesheet" media="all" href="jquery.mobile-1.0rc1.min.css"/>
+	    <link rel="stylesheet" media="all" href="jquerymobile10rc1min.css"/>
 	    <link rel="stylesheet" media="all" href="exha.css"/>
-	    <script type="text/javascript" src="phonegap-1.0.0.js"></script>
-	    <script type="text/javascript" src="jquery-1.6.4.min.js"></script>
-	   	    <script type="text/javascript" src="jquery.mobile-1.0rc1.min.js"></script>
-  <script type="text/javascript" src="modernizr-latest.js"></script>
+	    <script type="text/javascript" src="phonegap100.js"></script>
+	    <script type="text/javascript" src="jquery164min.js"></script>
+	   	    <script type="text/javascript" src="jquerymobile10rc1min.js"></script>
+  <script type="text/javascript" src="modernizrlatest.js"></script>
 	    <script type="text/javascript" src="exha.js"></script>
 	</head>
 	<body onload="exha.init()" >
@@ -99,10 +99,18 @@
                 <div data-role="content" id="contentDC">
                 
                     <div data-role="fieldcontain">
-                    <label for="textarea" >Capture Anything That Come To You:</label>
+                    <label for="textarea" >Capture Anything That Come To You:</label><br/>
                     <textarea cols="40" rows="8" name="textarea" id="inputDreamCapture"></textarea>
-                        <a href="#" data-role="button" data-inline="true" data-theme="b" id="saveDreamCaptureBtn">Save</a>
-                <a href="#" data-role="button" data-inline="true" id="cancelDreamCaptureBtn">Cancel</a>
+		    
+		    <fieldset class="ui-grid-a">
+	<div class="ui-block-a"><a href="#" data-role="button" data-theme="b" id="saveDreamCaptureBtn">Save</a></div>
+	<div class="ui-block-b"> <a href="#" data-role="button"  id="cancelDreamCaptureBtn">Cancel</a></div>	   
+</fieldset>
+		    
+                     
+		    
+                        
+               
                 </div>
 		
 		<ul data-role="listview" id="dreamCaptureTaskList">
@@ -139,10 +147,16 @@
                 <div data-role="content" id="contentWizard">
                   
                     <div data-role="fieldcontain">
-                    <label for="textarea">First, Please Dump Your Brain: </label>
+                    <label for="textarea">First, Please Dump Your Brain: </label><br/>
                     <textarea cols="40" rows="8" name="textarea" id="inputWizard1" ></textarea>
-                     <a href="#" data-role="button" data-inline="true" data-theme="b" id="saveWizard1Btn">Save</a>
-                   <a href="#" data-role="button" data-inline="true" id="cancelWizard1Btn">Cancel</a>
+		    
+		    <fieldset class="ui-grid-a">
+	<div class="ui-block-a"><a href="#" data-role="button"  data-theme="b" id="saveWizard1Btn">Save</a></div>
+	<div class="ui-block-b"><a href="#" data-role="button"  id="cancelWizard1Btn">Cancel</a></div>	   
+</fieldset>
+		    
+                     
+                   
                 </div>
              <div><a href="#wizard2" data-role="button" data-theme="d">Go To Next Step</a>
 	     <hr /></div>
@@ -319,7 +333,7 @@
                             <li>Tomorrow, when you run the wizard again, your dream capture list will show and you can set the priority (DO IT, SCHEDULE IT, DELETE IT or DELEGATE IT)</li>
                         </ol>
                         </p>
-                        <p>If you have suggestion, please email me at: <a href=mailto:"support@sabukhitam.com">support@sabukhitam.com</a></p>
+                        <p>If you have suggestion, please submit your comment at: <a href="http://excellenthabit.com" target="_blank">ExcellentHabit.com</a></p>
                 </div>
                 <hr/>		
                 <div data-role="footer" id="footer">	

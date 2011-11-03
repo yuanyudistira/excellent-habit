@@ -117,9 +117,14 @@ this.init = function () {
 this.onDeviceReady = function ()
 {
  
-   
+  document.addEventListener("pause", this.onPause, false);
+  
 }
 
+this.onPause = function()
+{
+    navigator.app.exitApp();   
+}
 this.createDatabase = function()
 {
         if (Modernizr.websqldatabase){
@@ -131,7 +136,7 @@ this.createDatabase = function()
         
         } else {
         
-            alert("sayang sekali tidak ada dukungan database");
+            alert("no database support");
         }
         
 }
@@ -216,7 +221,7 @@ this.displayTodayTask = function()
                 //newhtml ="<li>";
                 var currentDate = new Date();
                     tglHariIni = currentDate.getDate();
-                    blnHariIni = currentDate.getMonth();
+                    blnHariIni = currentDate.getMonth()+1;
                     thnHariIni = currentDate.getFullYear();
                      simpleDateToday = blnHariIni+"/"+tglHariIni+"/"+thnHariIni;
                      newSimpleTodayDateObject =  new Date(simpleDateToday);
@@ -230,7 +235,7 @@ this.displayTodayTask = function()
                     
                    var ItemDueDate  = new Date(result.rows.item(i).taskduedate);
                     tglTask = ItemDueDate.getDate();
-                    blnTask = ItemDueDate.getMonth();
+                    blnTask = ItemDueDate.getMonth()+1;
                     thnTask = ItemDueDate.getFullYear();
                     simpleDateTask = blnTask+"/"+tglTask+"/"+thnTask;
                     newSimpleTaskDateObject =  new Date(simpleDateTask);
@@ -238,7 +243,7 @@ this.displayTodayTask = function()
                     
                     //alert("item: "+simpleDateTask+" >> Current "+simpleDateToday);
                     
-                     //Only Show Today + Done Or not Done   
+                     //Show Today + Done Or not Done   
                         if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
                             if(result.rows.item(i).taskstatusid==3){
                                 
@@ -257,6 +262,23 @@ this.displayTodayTask = function()
                                                  
                            htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
                         }else {
+                            //show un finish from yesterday
+                            if(result.rows.item(i).taskstatusid==3){
+                                
+                                newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\"  class=yesterdayUnfinished>"+result.rows.item(i).taskname+"</label>";
+                               // newhtml +="A";
+                                
+                                
+                
+                            }else{
+                                //done, not show
+                  
+                            }
+                                                 
+                           htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';                           
+                            
+                            
                            
                         }
                         
@@ -441,7 +463,7 @@ this.displayWizard2Task = function()
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
                     $('#wizard2TaskList').append('<li id=\"itemWizard2'+result.rows.item(i).taskid+'\"><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id='+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div>'+
-                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.delegateTask('+result.rows.item(i).taskid+')\">DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
+                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">MAYBE</a>&nbsp;&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.delegateTask('+result.rows.item(i).taskid+')\">DELEGATE</a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
                 }
              
         }
@@ -638,7 +660,9 @@ this.customAlert = function(txtMessage) {
 
 this.displayCurrentDate = function() {
     var currentDate = new Date();
-    $("section#currentDateTime").text('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+    var currentMonth = currentDate.getMonth()+1;
+    
+    $("section#currentDateTime").text('Today: '+currentDate.getDate()+'/'+currentMonth+'/'+currentDate.getFullYear());
 }  
 
 this.reloadPage = function(){
