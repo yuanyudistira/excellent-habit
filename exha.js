@@ -247,15 +247,21 @@ this.displayTodayTask = function()
                         //if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
                             if(result.rows.item(i).taskstatusid==3){
                                 
+                                if(newSimpleTaskDateObject.getTime() < newSimpleTodayDateObject.getTime()) {
                                  newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\">"+result.rows.item(i).taskname+"</label>";
+                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=yesterdayUnfinished>"+result.rows.item(i).taskname+"</label>";
                                // newhtml +="A";
-                         
+                                }
+                                if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
+                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" >"+result.rows.item(i).taskname+"</label>";
+                               // newhtml +="A";
+                                }
                                 
                 
                             }else{
                                 
-                                if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                                if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
                                     newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
                                     newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
                                     //newhtml +="B";
