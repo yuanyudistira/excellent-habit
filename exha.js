@@ -128,7 +128,7 @@ this.onPause = function()
 this.createDatabase = function()
 {
         if (Modernizr.websqldatabase){
-            db = openDatabase('exhaDB2011', "1.0", 'exhadb',200000);
+            db = openDatabase('exhaDB2011BC', "1.0", 'exhadb',200000);
             
             //alert(" database exhadb telah dibuat ");
             
@@ -244,24 +244,18 @@ this.displayTodayTask = function()
                     //alert("item: "+simpleDateTask+" >> Current "+simpleDateToday);
                     
                      //Show Today + Done Or not Done   
-                        //if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                        if(newSimpleTaskDateObject.getTime() <= newSimpleTodayDateObject.getTime()) {
+                            
+                           // alert("hari ini atau kemarin ");
+                            
                             if(result.rows.item(i).taskstatusid==3){
-                                
-                                if(newSimpleTaskDateObject.getTime() < newSimpleTodayDateObject.getTime()) {
-                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=yesterdayUnfinished>"+result.rows.item(i).taskname+"</label>";
-                               // newhtml +="A";
-                                }
-                                if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
                                  newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
                                 newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" >"+result.rows.item(i).taskname+"</label>";
-                               // newhtml +="A";
-                                }
-                                
-                
-                            }else{
+                               // newhtml +="A";              
+                            }else{                               
                                 
                                 if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
+                                    //alert("hari ini");
                                     newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
                                     newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
                                     //newhtml +="B";
@@ -270,14 +264,14 @@ this.displayTodayTask = function()
                             }
                                                  
                            htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
-                       // }else {
+                      }else {
                            
                            
                                         
-                            
+                            //alert("hari esok");
                             
                            
-                       // }
+                       }
                         
 
                         
