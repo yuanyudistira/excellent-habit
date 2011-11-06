@@ -2,7 +2,8 @@
 <widget xmlns = "http://www.w3.org/ns/widgets"
 xmlns:gap = "http://phonegap.com/ns/1.0"
 id = "com.pusakainformatika.excellenthabit"
-version = "0.9.9">
+version = "1.0.2"
+versionCode = "125">
 
 <name>Excellent Habit</name>
 
@@ -16,17 +17,18 @@ Yuan Yudistira
 </author>
 
 <gap:platforms>
-<gap:platform name="android" minVersion="2.0" />
+<gap:platform name="android" minVersion="1.0" />
 <gap:platform name="webos" />
 <gap:platform name="symbian.wrt" />
 <gap:platform name="blackberry" project="widgets"/>
 </gap:platforms>
 
-<icon src="icon.png" gap:role="default" />
+<icon src="iconico72.png" width="72" height="72"></icon>
 
 <gap:splash src="phonestartup.png"/>
 
-
-
-  <preference name="permissions" value="none"/>
+<feature name="http://api.phonegap.com/1.0/contacts"/>
+<feature name="http://api.phonegap.com/1.0/file"/>
+<feature name="http://api.phonegap.com/1.0/network"/>
+<feature name="http://api.phonegap.com/1.0/notification"/>
 </widget>

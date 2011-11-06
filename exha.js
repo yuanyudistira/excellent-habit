@@ -117,13 +117,18 @@ this.init = function () {
 this.onDeviceReady = function ()
 {
  
-   
+  document.addEventListener("pause", this.onPause, false);
+  
 }
 
+this.onPause = function()
+{
+    navigator.app.exitApp();   
+}
 this.createDatabase = function()
 {
         if (Modernizr.websqldatabase){
-            db = openDatabase('exhaDB2011', "1.0", 'exhadb',200000);
+            db = openDatabase('exhaDB2011BC', "1.0", 'exhadb',200000);
             
             //alert(" database exhadb telah dibuat ");
             
@@ -131,7 +136,7 @@ this.createDatabase = function()
         
         } else {
         
-            alert("sayang sekali tidak ada dukungan database");
+            alert("n");
         }
         
 }
@@ -200,9 +205,6 @@ this.displayTodayTask = function()
 {
     var htmlTodayTask = db.transaction(function(tx) {
         
-        var currentDate = new Date();
-        //currentDate2 = date1.getTime()
-        //alert(currentDate);
         tx.executeSql('SELECT *  FROM task where taskstatusid=3 or taskstatusid=6 order by taskid DESC',[], function (tx, result) {
     
         jmlItem = result.rows.length;
@@ -210,13 +212,10 @@ this.displayTodayTask = function()
         if(jmlItem==0) {
             newhtml = "<p>TIDAK ADA TASK HARI INI</p>";
         }else{
-            //<input type="checkbox" name="checkbox-1" id="checkbox-1" class="custom" />
               var len = result.rows.length, i;
-               //newhtml = "<fieldset data-role=\"controlgroup\">";
-                //newhtml ="<li>";
                 var currentDate = new Date();
                     tglHariIni = currentDate.getDate();
-                    blnHariIni = currentDate.getMonth();
+                    blnHariIni = currentDate.getMonth()+1;
                     thnHariIni = currentDate.getFullYear();
                      simpleDateToday = blnHariIni+"/"+tglHariIni+"/"+thnHariIni;
                      newSimpleTodayDateObject =  new Date(simpleDateToday);
@@ -226,11 +225,11 @@ this.displayTodayTask = function()
                     
                     //date1 = new Date('01/02/2010') >> 2 januari 2010
 
-                    
+                    //alert(result.rows.item(i).taskid);
                     
                    var ItemDueDate  = new Date(result.rows.item(i).taskduedate);
                     tglTask = ItemDueDate.getDate();
-                    blnTask = ItemDueDate.getMonth();
+                    blnTask = ItemDueDate.getMonth()+1;
                     thnTask = ItemDueDate.getFullYear();
                     simpleDateTask = blnTask+"/"+tglTask+"/"+thnTask;
                     newSimpleTaskDateObject =  new Date(simpleDateTask);
@@ -238,27 +237,53 @@ this.displayTodayTask = function()
                     
                     //alert("item: "+simpleDateTask+" >> Current "+simpleDateToday);
                     
-                     //Only Show Today + Done Or not Done   
-                        if(newSimpleTaskDateObject.getTime() === newSimpleTodayDateObject.getTime()) {
+                     //Show Today + Done Or not Done   
+                        if(newSimpleTaskDateObject.getTime() <= newSimpleTodayDateObject.getTime()) {
+                            
+                           // alert("hari ini atau kemarin ");
+                           //alert(result.rows.item(i).taskname);
+                            
                             if(result.rows.item(i).taskstatusid==3){
                                 
-                                newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\">"+result.rows.item(i).taskname+"</label>";
-                               // newhtml +="A";
+                                if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
+                                    newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                    newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" >"+result.rows.item(i).taskname+"</label>";
+                                    
+                                    htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
+                                }else{
+                                    newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" />" ;
+                                    newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\"  class=yesterdayUnfinished>"+result.rows.item(i).taskname+"</label>";
+                                    
+                                    htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
+                                        
+                                }
                                 
                                 
-                
-                            }else{
+                            }else{                               
                                 
-                                 newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
-                                newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
-                               //newhtml +="B";
+                                if(newSimpleTaskDateObject.getTime() == newSimpleTodayDateObject.getTime()) {
+                                    //alert("hari ini");
+                                    newhtml = "<input type=\"checkbox\" name=\"checkboxToday-"+result.rows.item(i).taskid+"\" id=\"checkboxToday-"+result.rows.item(i).taskid+"\" value=\""+result.rows.item(i).taskid+"\" class=\"custom\" disabled checked/>" ;
+                                    newhtml2 = "<label for=\"checkboxToday-"+result.rows.item(i).taskid+"\" class=tulisanCoret>"+result.rows.item(i).taskname+"</label>";
+                                    //newhtml +="B";
+                                
+                                    htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
+                                
+                                }
+                                
+                                
+                            
                             }
                                                  
-                           htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
-                        }else {
+                           //htmlNewContent +='<li><p>Date: '+result.rows.item(i).taskduedate+'</p><div >'+newhtml+newhtml2+'</div></li>';
+                      }else {
                            
-                        }
+                           //alert(result.rows.item(i).taskname);
+                                        
+                            //alert("hari esok");
+                            
+                           
+                       }
                         
 
                         
@@ -441,7 +466,7 @@ this.displayWizard2Task = function()
                 //var newhtml = "<fieldset data-role=\"controlgroup\">";
                 for (i = 0; i < len; i++) {
                     $('#wizard2TaskList').append('<li id=\"itemWizard2'+result.rows.item(i).taskid+'\"><p>InsertDate: '+result.rows.item(i).taskduedate+'</p><div id='+result.rows.item(i).taskid+'>'+result.rows.item(i).taskname+'</div>'+
-                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">FOR TOMORROW</a>&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.delegateTask('+result.rows.item(i).taskid+')\">DELEGATE IT</a>&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
+                      '<div><a href=\"#\"  onClick=\"exha.setAsTodayTask('+result.rows.item(i).taskid+')\">DO IT</a>&nbsp;&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.scheduleTask('+result.rows.item(i).taskid+')\">MAYBE</a>&nbsp;&nbsp;&nbsp;<a href=\"#\"  onClick=\"exha.delegateTask('+result.rows.item(i).taskid+')\">DELEGATE</a>&nbsp;&nbsp;&nbsp;<a href=\"#\" onClick=\"exha.deleteTask('+result.rows.item(i).taskid+')\">DELETE</a></div>'+'</li>').listview('refresh');
                 }
              
         }
@@ -638,7 +663,9 @@ this.customAlert = function(txtMessage) {
 
 this.displayCurrentDate = function() {
     var currentDate = new Date();
-    $("section#currentDateTime").text('Today: '+currentDate.getDate()+'/'+currentDate.getMonth()+'/'+currentDate.getFullYear());
+    var currentMonth = currentDate.getMonth()+1;
+    
+    $("section#currentDateTime").text('Today: '+currentDate.getDate()+'/'+currentMonth+'/'+currentDate.getFullYear());
 }  
 
 this.reloadPage = function(){
